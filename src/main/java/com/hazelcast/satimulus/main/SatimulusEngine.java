@@ -24,6 +24,7 @@ import static java.lang.Runtime.getRuntime;
 
 public class SatimulusEngine {
     public static int phPerSecPerMember = 1;
+    private final String PHONEHOME_FILE_NAME = "C:\\Users\\Alparslan\\workspace\\satimulusengine\\src\\main\\resources\\phoneHomes.csv";
     private JetInstance jet;
     public static final String PHONEHOME_LIST_NAME = "phList";
     public static final String FILTERING_ALERT_LIST_NAME = "filterAlertList";
@@ -42,16 +43,14 @@ public class SatimulusEngine {
         JetConfig cfg = new JetConfig();
         cfg.setInstanceConfig(new InstanceConfig().setCooperativeThreadCount(
                 Math.max(1, getRuntime().availableProcessors() / 2)));
-        System.out.println("Creating Jet instance 1");
+        System.out.println("Creating Jet instance");
         jet = Jet.newJetInstance(cfg);
-//        System.out.println("Creating Jet instance 2");
-//        Jet.newJetInstance(cfg);
         loadData();
     }
 
     private void loadData() {
         IStreamList<String> phoneHomeList = jet.getList(PHONEHOME_LIST_NAME);
-        List<String> lines = docLines("C:\\Users\\Alparslan\\workspace\\satimulusengine\\src\\main\\resources\\phoneHomes.csv").collect(Collectors.toList());
+        List<String> lines = docLines(PHONEHOME_FILE_NAME).collect(Collectors.toList());
         phoneHomeList.addAll(lines);
     }
 
